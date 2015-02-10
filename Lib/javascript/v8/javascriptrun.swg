@@ -8,7 +8,7 @@
 #define SWIG_fail                 goto fail
 #define SWIGV8_OVERLOAD false
 
-void SWIG_V8_Raise(const char* msg) {
+static void SWIG_V8_Raise(const char* msg) {
 #if (SWIG_V8_VERSION < 0x032410)
   v8::ThrowException(v8::Exception::Error(v8::String::New(msg)));
 #else
@@ -38,7 +38,7 @@ public:
   }
 };
 // this is used in usually
-V8ErrorHandler SWIGV8_ErrorHandler;
+static V8ErrorHandler SWIGV8_ErrorHandler;
 
 // instances of this are used in overloaded functions
 class OverloadErrorHandler: public V8ErrorHandler {
@@ -139,9 +139,9 @@ public:
 #endif
 };
 
-v8::Persistent<v8::FunctionTemplate> SWIGV8_SWIGTYPE_Proxy_class_templ;
+static v8::Persistent<v8::FunctionTemplate> SWIGV8_SWIGTYPE_Proxy_class_templ;
 
-int SWIG_V8_ConvertInstancePtr(v8::Handle<v8::Object> objRef, void** ptr, swig_type_info *info, int flags) {
+static int SWIG_V8_ConvertInstancePtr(v8::Handle<v8::Object> objRef, void** ptr, swig_type_info *info, int flags) {
   SWIGV8_SCOPE(scope);
 
   if(objRef->InternalFieldCount() < 1) return SWIG_ERROR;
@@ -174,11 +174,11 @@ int SWIG_V8_ConvertInstancePtr(v8::Handle<v8::Object> objRef, void** ptr, swig_t
 }
 
 #if (SWIG_V8_VERSION < 0x031900)
-void SWIGV8_Proxy_DefaultDtor(v8::Persistent< v8::Value > object, void *parameter)
+static void SWIGV8_Proxy_DefaultDtor(v8::Persistent< v8::Value > object, void *parameter)
 #elif (SWIG_V8_VERSION < 0x032112)
-void SWIGV8_Proxy_DefaultDtor(v8::Isolate *, v8::Persistent< v8::Object > *object, SWIGV8_Proxy *proxy)
+static void SWIGV8_Proxy_DefaultDtor(v8::Isolate *, v8::Persistent< v8::Object > *object, SWIGV8_Proxy *proxy)
 #else
-void SWIGV8_Proxy_DefaultDtor(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
+static void SWIGV8_Proxy_DefaultDtor(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
 #endif
 {
 #if (SWIG_V8_VERSION < 0x031900)
@@ -192,7 +192,7 @@ void SWIGV8_Proxy_DefaultDtor(const v8::WeakCallbackData < v8::Object, SWIGV8_Pr
   delete proxy;
 }
 
-int SWIG_V8_GetInstancePtr(v8::Handle<v8::Value> valRef, void** ptr) {
+static int SWIG_V8_GetInstancePtr(v8::Handle<v8::Value> valRef, void** ptr) {
   if(!valRef->IsObject()) {
     return SWIG_TypeError;
   }
@@ -216,7 +216,7 @@ int SWIG_V8_GetInstancePtr(v8::Handle<v8::Value> valRef, void** ptr) {
   return SWIG_OK;
 }
 
-void SWIGV8_SetPrivateData(v8::Handle<v8::Object> obj, void* ptr, swig_type_info *info, int flags) {
+static void SWIGV8_SetPrivateData(v8::Handle<v8::Object> obj, void* ptr, swig_type_info *info, int flags) {
   SWIGV8_Proxy* cdata = new SWIGV8_Proxy();
   cdata->swigCObject = ptr;
   cdata->swigCMemOwn = (flags & SWIG_POINTER_OWN) ? 1 : 0;
@@ -260,7 +260,7 @@ void SWIGV8_SetPrivateData(v8::Handle<v8::Object> obj, void* ptr, swig_type_info
 
 }
 
-int SWIG_V8_ConvertPtr(v8::Handle<v8::Value> valRef, void** ptr, swig_type_info *info, int flags) {
+static int SWIG_V8_ConvertPtr(v8::Handle<v8::Value> valRef, void** ptr, swig_type_info *info, int flags) {
   SWIGV8_SCOPE(scope);
 
   if(!valRef->IsObject()) {
@@ -270,7 +270,7 @@ int SWIG_V8_ConvertPtr(v8::Handle<v8::Value> valRef, void** ptr, swig_type_info 
   return SWIG_V8_ConvertInstancePtr(objRef, ptr, info, flags);
 }
 
-v8::Handle<v8::Object> SWIG_V8_NewPointerObj(void *ptr, swig_type_info *info, int flags) {
+static v8::Handle<v8::Object> SWIG_V8_NewPointerObj(void *ptr, swig_type_info *info, int flags) {
   SWIGV8_SCOPE(scope);
   v8::Local<v8::FunctionTemplate> class_templ;
 
@@ -306,9 +306,9 @@ v8::Handle<v8::Object> SWIG_V8_NewPointerObj(void *ptr, swig_type_info *info, in
 #define SWIG_GetInstancePtr(obj, ptr)    SWIG_V8_GetInstancePtr(obj, ptr)
 
 #if (SWIG_V8_VERSION < 0x031900)
-v8::Handle<v8::Value> _SWIGV8_wrap_equals(const v8::Arguments &args) {
+static v8::Handle<v8::Value> _SWIGV8_wrap_equals(const v8::Arguments &args) {
 #else
-void _SWIGV8_wrap_equals(const v8::FunctionCallbackInfo<v8::Value>& args) {
+static void _SWIGV8_wrap_equals(const v8::FunctionCallbackInfo<v8::Value>& args) {
 #endif
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Value> jsresult;
@@ -343,9 +343,9 @@ fail:
 }
 
 #if (SWIG_V8_VERSION < 0x031900)
-v8::Handle<v8::Value> _wrap_getCPtr(const v8::Arguments &args) {
+static v8::Handle<v8::Value> _wrap_getCPtr(const v8::Arguments &args) {
 #else
-void _wrap_getCPtr(const v8::FunctionCallbackInfo<v8::Value>& args) {
+static void _wrap_getCPtr(const v8::FunctionCallbackInfo<v8::Value>& args) {
 #endif
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Value> jsresult;
@@ -437,14 +437,14 @@ int SWIGV8_ConvertPacked(v8::Handle<v8::Value> valRef, void *ptr, size_t sz, swi
 }
 
 #if (SWIG_V8_VERSION < 0x031900)
-void _wrap_SwigV8PackedData_delete(v8::Persistent< v8::Value > object, void *parameter)
+static void _wrap_SwigV8PackedData_delete(v8::Persistent< v8::Value > object, void *parameter)
 {
   SwigV8PackedData *cdata = static_cast<SwigV8PackedData *>(parameter);
 #elif (SWIG_V8_VERSION < 0x032112)
-void _wrap_SwigV8PackedData_delete(v8::Isolate *isolate, v8::Persistent< v8::Object > * object, SwigV8PackedData *cdata)
+static void _wrap_SwigV8PackedData_delete(v8::Isolate *isolate, v8::Persistent< v8::Object > * object, SwigV8PackedData *cdata)
 {
 #else
-void _wrap_SwigV8PackedData_delete(const v8::WeakCallbackData < v8::Object, SwigV8PackedData > &data)
+static void _wrap_SwigV8PackedData_delete(const v8::WeakCallbackData < v8::Object, SwigV8PackedData > &data)
 {
   SwigV8PackedData *cdata = data.GetParameter();
 #endif

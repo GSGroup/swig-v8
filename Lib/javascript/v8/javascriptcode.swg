@@ -71,7 +71,7 @@ fail:
  *   - $jsmangledtype:    mangled type of class
  * ----------------------------------------------------------------------------- */
 %fragment("js_overloaded_ctor", "templates") %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args, V8ErrorHandler& SWIGV8_ErrorHandler) {
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args, V8ErrorHandler& SWIGV8_ErrorHandler) {
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Object> self = args.Holder();
   $jslocals
@@ -282,7 +282,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment ("js_overloaded_function", "templates")
 %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args, V8ErrorHandler& SWIGV8_ErrorHandler)
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args, V8ErrorHandler& SWIGV8_ErrorHandler)
 {
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Value> jsresult;
