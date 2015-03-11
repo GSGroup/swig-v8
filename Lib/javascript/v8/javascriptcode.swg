@@ -8,7 +8,7 @@
  * ----------------------------------------------------------------------------- */
 
 %fragment("js_ctor", "templates") %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Object> self = args.Holder();
   $jslocals
@@ -31,7 +31,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment ("js_veto_ctor", "templates")
 %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
   SWIGV8_SCOPE(scope);
   SWIG_exception(SWIG_ERROR, "Class $jsname can not be instantiated");
   SWIGV8_RETURN_UNDEF();
@@ -46,7 +46,7 @@ SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
  * ----------------------------------------------------------------------------- */
 %fragment ("js_ctor_dispatcher", "templates")
 %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
   SWIGV8_SCOPE(scope);
   OverloadErrorHandler errorHandler;
   v8::Handle<v8::Value> self;
@@ -119,14 +119,14 @@ fail:
 %{
 
 #if (SWIG_V8_VERSION < 0x031900)
-void $jswrapper(v8::Persistent< v8::Value > object, void *parameter)
+static void $jswrapper(v8::Persistent< v8::Value > object, void *parameter)
 {
   SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
 #elif (SWIG_V8_VERSION < 0x032112)
-void $jswrapper(v8::Isolate *isolate, v8::Persistent< v8::Object > * object, SWIGV8_Proxy *proxy)
+static void $jswrapper(v8::Isolate *isolate, v8::Persistent< v8::Object > * object, SWIGV8_Proxy *proxy)
 {
 #else
-void $jswrapper(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
+static void $jswrapper(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
 {
   SWIGV8_Proxy *proxy = data.GetParameter();
 #endif
@@ -159,14 +159,14 @@ void $jswrapper(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
 %fragment ("js_dtoroverride", "templates")
 %{
 #if (SWIG_V8_VERSION < 0x031900)
-void $jswrapper(v8::Persistent< v8::Value > object, void *parameter)
+static void $jswrapper(v8::Persistent< v8::Value > object, void *parameter)
 {
   SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
 #elif (SWIG_V8_VERSION < 0x032112)
-void $jswrapper(v8::Isolate *isolate, v8::Persistent< v8::Object > * object, SWIGV8_Proxy *proxy)
+static void $jswrapper(v8::Isolate *isolate, v8::Persistent< v8::Object > * object, SWIGV8_Proxy *proxy)
 {
 #else
-void $jswrapper(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
+static void $jswrapper(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
 {
   SWIGV8_Proxy *proxy = data.GetParameter();
 #endif
@@ -196,7 +196,7 @@ void $jswrapper(const v8::WeakCallbackData < v8::Object, SWIGV8_Proxy > &data)
  * ----------------------------------------------------------------------------- */
 %fragment("js_getter", "templates")
 %{
-SwigV8ReturnValue $jswrapper(v8::Local<v8::String> property, const SwigV8PropertyCallbackInfo& args) {
+static SwigV8ReturnValue $jswrapper(v8::Local<v8::String> property, const SwigV8PropertyCallbackInfo& args) {
   SWIGV8_SCOPE(scope);
   v8::Local<v8::Value> jsresult;
   $jslocals
@@ -217,7 +217,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("js_setter", "templates")
 %{
-void $jswrapper(v8::Local<v8::String> property, v8::Local<v8::Value> value,
+static void $jswrapper(v8::Local<v8::String> property, v8::Local<v8::Value> value,
   const SwigV8PropertyCallbackInfoVoid& args) {
   SWIGV8_SCOPE(scope);
   $jslocals
@@ -236,7 +236,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("js_function", "templates")
 %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Value> jsresult;
   $jslocals
@@ -260,7 +260,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("js_function_dispatcher", "templates")
 %{
-SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
+static SwigV8ReturnValue $jswrapper(const SwigV8Arguments& args) {
   SWIGV8_SCOPE(scope);
   v8::Handle<v8::Value> jsresult;
   OverloadErrorHandler errorHandler;
@@ -325,7 +325,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_declare_class_template", "templates")
 %{
-  SWIGV8_ClientData $jsmangledname_clientData;
+  static SWIGV8_ClientData $jsmangledname_clientData;
 %}
 
 /* -----------------------------------------------------------------------------
