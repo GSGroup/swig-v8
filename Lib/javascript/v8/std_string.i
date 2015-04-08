@@ -13,7 +13,7 @@
 %}
 
 %fragment("SWIGV8_valueToString", "header", fragment="SWIG_AsCharPtrAndSize") {
-std::string* SWIGV8_valueToStringPtr(v8::Handle<v8::Value> val) {
+static std::string* SWIGV8_valueToStringPtr(v8::Handle<v8::Value> val) {
 
   if (!val->IsString()) return 0;
 
@@ -38,7 +38,7 @@ std::string* SWIGV8_valueToStringPtr(v8::Handle<v8::Value> val) {
 }
 
 %fragment("SWIGV8_stringToValue", "header", fragment="SWIG_FromCharPtrAndSize") {
-v8::Handle<v8::Value> SWIGV8_stringToValue(const std::string &str) {
+static v8::Handle<v8::Value> SWIGV8_stringToValue(const std::string &str) {
   return SWIG_FromCharPtrAndSize(str.c_str(), str.length());
 }
 }
